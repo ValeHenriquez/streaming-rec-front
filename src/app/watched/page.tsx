@@ -1,24 +1,22 @@
 "use client";
-import useWatchedIds from "@/hooks/useWatchedIds";
+import useWatchedProfile from "@/hooks/useWatchedProfile";
 import useMovie from "@/hooks/useMovie";
 
-const WatchedPage = () => {
-	const { data } = useWatchedIds("65828b0f41652bf317260bf9");
-	const ids = data?.history.map((item: any) => item.movieId) || [];
-	console.log("EN WATCHED PAGE", ids);
+import useUser from "@/store/useUser";
+import MovieList from "@/components/MovieList";
 
-	const movies: any = [];
-	for (let id of ids) {
-		console.log("ID", id);
-		const { data: movie } = useMovie(id);
-		console.log("movie", movie);
-		movies.push(movie);
-	}
-	console.log("MOVIES", movies);
+const WatchedPage = () => {
+	const { profile } = useUser();
+
+	console.log("THIS IS THE PROFILE IN WATHCED PAGE", profile, profile._id);
+	const { data } = useWatchedProfile(profile._id);
+
+	console.log("MOVIES", data);
 	return (
 		<div className="watched-page">
-			<h1>Watched</h1>
-			<div className="watched-page__list"></div>
+			<div className="pb-10">
+				<MovieList title="Watched Movies" data={data} />
+			</div>
 		</div>
 	);
 };

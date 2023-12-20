@@ -10,20 +10,19 @@ type UserStore = {
 
 const useUser = create<UserStore>((set) => ({
 	user: {
-		id: "",
-		name: "",
 		email: "",
+		name: "",
 		password: "",
 	},
 	profile: {
-		id: "",
+		_id: "",
 		name: "",
 		accountId: "",
 		history: [],
 	},
 	setUser: (user: User | null) => {
 		if (user === null) {
-			set({ user: { id: "", name: "", email: "", password: "" } });
+			set({ user: { email: "", name: "", password: "" } });
 		} else {
 			set({ user });
 		}

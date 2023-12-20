@@ -34,7 +34,7 @@ const UserCard: React.FC<UserCardProps> = ({ name }) => {
 const Profiles = () => {
 	const { user } = useUser();
 	console.log("THIS IS THE USER IN PROFILE", user);
-	const { data: profiles } = useProfiles(user.id);
+	const { data: profiles } = useProfiles(user.email);
 	console.log(profiles);
 
 	const { setProfile } = useUser();

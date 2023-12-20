@@ -16,8 +16,6 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
 	// 	name: "Test",
 	// };
 
-	console.log("THIS IS THE CURRENT USER IN ACCOUNT MENU", currentUser);
-
 	if (!visible) {
 		return null;
 	}

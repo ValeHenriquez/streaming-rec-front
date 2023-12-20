@@ -1,12 +1,11 @@
 export interface User {
-	id: string;
-	name: string;
 	email: string;
+	name: string;
 	password: string;
 }
 
 export interface Profile {
-	id: string;
+	_id: string;
 	name: string;
 	accountId: string;
 	history: [];

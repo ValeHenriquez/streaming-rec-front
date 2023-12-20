@@ -1,9 +1,9 @@
 import useSwr from "swr";
 import fetcher from "@/libs/fetcher";
 
-const useWatchedIds = (id?: string) => {
+const useWatchedProfile = (id?: string) => {
 	const { data, error, isLoading } = useSwr(
-		id ? `http://localhost:8081/profiles/${id}` : null,
+		id ? `http://localhost:8081/profiles/history/${id}/movies` : null,
 		fetcher,
 		{
 			revalidateIfStale: false,
@@ -18,4 +18,4 @@ const useWatchedIds = (id?: string) => {
 	};
 };
 
-export default useWatchedIds;
+export default useWatchedProfile;

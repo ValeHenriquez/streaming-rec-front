@@ -7,14 +7,7 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import useUser from "@/store/useUser";
-import { set } from "react-hook-form";
 
-const testUser = {
-	id: "1",
-	name: "Test name",
-	email: "test@test.com",
-	password: "test",
-};
 
 const Auth: React.FC = () => {
 	const router = useRouter();
@@ -33,13 +26,14 @@ const Auth: React.FC = () => {
 
 	const login = useCallback(async () => {
 		try {
-			//   await signIn('credentials', {
-			//     email,
-			//     password,
-			//     redirect: false,
-			//     callbackUrl: '/'
-			//   });
-			setUser(testUser);
+			const response = await axios.post("http://127.0.0.1:8082/login", {
+				email,
+				password,
+			});
+
+			console.log(response);
+
+			setUser(response.data);
 
 			router.push("/profiles");
 		} catch (error) {
@@ -49,11 +43,12 @@ const Auth: React.FC = () => {
 
 	const register = useCallback(async () => {
 		try {
-			await axios.post("/api/register", {
+			const response = await axios.post("http://127.0.0.1:8082/register", {
 				email,
 				name,
 				password,
 			});
+			console.log(response);
 
 			login();
 		} catch (error) {
