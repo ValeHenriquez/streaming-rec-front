@@ -3,6 +3,7 @@ import React from "react";
 
 //import useCurrentUser from "@/hooks/useCurrentUser";
 import { useRouter } from "next/navigation";
+import useUser from "@/store/useUser";
 
 interface AccountMenuProps {
 	visible?: boolean;
@@ -10,10 +11,12 @@ interface AccountMenuProps {
 
 const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
 	const router = useRouter();
-	//const { data: currentUser } = useCurrentUser();
-	const currentUser = {
-		name: "Test",
-	};
+	const { profile: currentUser, setUser } = useUser();
+	// const currentUser = {
+	// 	name: "Test",
+	// };
+
+	console.log("THIS IS THE CURRENT USER IN ACCOUNT MENU", currentUser);
 
 	if (!visible) {
 		return null;
@@ -21,6 +24,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
 
 	const signOut = () => {
 		// signOut();
+		setUser(null);
 		router.push("/auth");
 	};
 

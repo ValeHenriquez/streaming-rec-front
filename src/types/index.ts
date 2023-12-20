@@ -11,6 +11,8 @@ export interface MovieInterface {
 	genres: Genre[];
 }
 
+
+
 export interface Actor {
 	id: number;
 	name: string;

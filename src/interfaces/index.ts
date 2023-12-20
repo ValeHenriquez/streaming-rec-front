@@ -4,3 +4,10 @@ export interface User {
 	email: string;
 	password: string;
 }
+
+export interface Profile {
+	id: string;
+	name: string;
+	accountId: string;
+	history: [];
+}

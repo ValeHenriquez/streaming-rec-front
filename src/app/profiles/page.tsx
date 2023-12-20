@@ -1,10 +1,9 @@
 "use client";
+import useProfiles from "@/hooks/useProfiles";
+import useUser from "@/store/useUser";
 import { NextPageContext } from "next";
-// import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-
-// import useCurrentUser from "@/hooks/useCurrentUser";
 
 const images = [
 	"/images/default-blue.png",
@@ -16,23 +15,6 @@ const images = [
 interface UserCardProps {
 	name: string;
 }
-
-// export async function getServerSideProps(context: NextPageContext) {
-// 	  const session = await getSession(context);
-
-// 	  if (!session) {
-// 	    return {
-// 	      redirect: {
-// 	        destination: '/auth',
-// 	        permanent: false,
-// 	      }
-// 	    }
-// 	  }
-
-// 	return {
-// 		props: {},
-// 	};
-// }
 
 const UserCard: React.FC<UserCardProps> = ({ name }) => {
 	const imgSrc = images[Math.floor(Math.random() * 4)];
@@ -50,16 +32,21 @@ const UserCard: React.FC<UserCardProps> = ({ name }) => {
 };
 
 const Profiles = () => {
+	const { user } = useUser();
+	console.log("THIS IS THE USER IN PROFILE", user);
+	const { data: profiles } = useProfiles(user.id);
+	console.log(profiles);
+
+	const { setProfile } = useUser();
 	const router = useRouter();
-	//   const { data: currentUser } = useCurrentUser();
 
-	const currentUser = {
-		name: "Test",
-	};
-
-	const selectProfile = useCallback(() => {
-		router.push("/");
-	}, [router]);
+	const selectProfile = useCallback(
+		(profile: any) => {
+			setProfile(profile);
+			router.push("/");
+		},
+		[router]
+	);
 
 	return (
 		<div className="flex items-center h-full justify-center">
@@ -69,18 +56,11 @@ const Profiles = () => {
 				</h1>
 				<div className="flex items-center justify-center mt-10">
 					<div className="flex gap-2">
-						<div className="mx-2" onClick={() => selectProfile()}>
-							<UserCard name={currentUser?.name} />
-						</div>
-						<div className="mx-2" onClick={() => selectProfile()}>
-							<UserCard name={currentUser?.name} />
-						</div>
-						<div className="mx-2" onClick={() => selectProfile()}>
-							<UserCard name={currentUser?.name} />
-						</div>
-						<div className="mx-2" onClick={() => selectProfile()}>
-							<UserCard name={currentUser?.name} />
-						</div>
+						{profiles?.map((profile: any) => (
+							<div key={profile.id} onClick={() => selectProfile(profile)}>
+								<UserCard name={profile.name} />
+							</div>
+						))}
 					</div>
 				</div>
 			</div>

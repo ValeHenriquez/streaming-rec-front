@@ -6,6 +6,15 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import useUser from "@/store/useUser";
+import { set } from "react-hook-form";
+
+const testUser = {
+	id: "1",
+	name: "Test name",
+	email: "test@test.com",
+	password: "test",
+};
 
 const Auth: React.FC = () => {
 	const router = useRouter();
@@ -20,6 +29,8 @@ const Auth: React.FC = () => {
 		setVariant((currentVariant) => (currentVariant === "login" ? "register" : "login"));
 	}, []);
 
+	const { setUser } = useUser();
+
 	const login = useCallback(async () => {
 		try {
 			//   await signIn('credentials', {
@@ -28,6 +39,7 @@ const Auth: React.FC = () => {
 			//     redirect: false,
 			//     callbackUrl: '/'
 			//   });
+			setUser(testUser);
 
 			router.push("/profiles");
 		} catch (error) {
