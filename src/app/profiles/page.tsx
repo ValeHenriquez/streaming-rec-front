@@ -1,6 +1,7 @@
 "use client";
 import useProfiles from "@/hooks/useProfiles";
 import useUser from "@/store/useUser";
+import axios from "axios";
 import { NextPageContext } from "next";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
@@ -48,6 +49,24 @@ const Profiles = () => {
 		[router]
 	);
 
+	const addProfile = async () => {
+		try {
+			// Realizar la llamada Axios para agregar un perfil
+			const response = await axios.post("http://localhost:8081/profiles", {
+				name: "New Profile",
+				accountId: user.email,
+			});
+
+			// Si la llamada es exitosa, puedes manejar la respuesta como desees
+			console.log("Perfil agregado:", response.data);
+			//const { data: profiles } = useProfiles(user.email);
+			
+		} catch (error) {
+			// Manejo de errores si la llamada Axios falla
+			console.error("Error al agregar perfil:", error);
+		}
+	};
+
 	return (
 		<div className="flex items-center h-full justify-center">
 			<div className="flex flex-col">
@@ -56,6 +75,18 @@ const Profiles = () => {
 				</h1>
 				<div className="flex items-center justify-center mt-10">
 					<div className="flex gap-2">
+						{/* Botón para agregar perfil */}
+						<div>
+							<button
+								onClick={addProfile}
+								className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden"
+							>
+								<span className="text-gray-400 text-6xl group-hover:text-white">
+									+
+								</span>
+							</button>
+						</div>
+						{/* Mapeo de perfiles existentes */}
 						{profiles?.map((profile: any) => (
 							<div key={profile.id} onClick={() => selectProfile(profile)}>
 								<UserCard name={profile.name} />
